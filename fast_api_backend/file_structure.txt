@@ -1,0 +1,7 @@
+frame_recieving.py :A simple http post req for accepting frame,frame_id,timestamp
+frame_yolo.py :Using a post req accept frame,frame_id,timestamp and do object detection task
+frame_websocket.py :Using websocket accept frame,frame_id,timestamp and do object detection task
+    the client that reqeust a connection is client_frame_sending.js 
+main.py +vehicle_detection.py : For each frame after object detection give veh_id for each vehicle and 
+    cut the frames to corresponding vehicles 
+    next task is to push this vehicles to redis queue
