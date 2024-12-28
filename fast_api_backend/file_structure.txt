@@ -5,3 +5,15 @@ frame_websocket.py :Using websocket accept frame,frame_id,timestamp and do objec
 main.py +vehicle_detection.py : For each frame after object detection give veh_id for each vehicle and 
     cut the frames to corresponding vehicles 
     next task is to push this vehicles to redis queue
+-> requirements
+    download redis 
+-> how to run and test
+    run server using 
+        python -m uvicorn main:app --reload
+    turn on the redis server
+     .\redis-server.exe redis.windows.conf(after installation move in to the directory having redis installed)
+    run node using 
+         node client_frame_sending.js
+    watch the redis queue in another terminal inside redis directory using
+         ./redis-cli.exe
+         lrange vehicle_queue 0 -1

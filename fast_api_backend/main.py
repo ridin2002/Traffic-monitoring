@@ -2,9 +2,12 @@ import cv2
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 import numpy as np
 from typing import List
+from redis_handler import RedisHandler 
 from vehicle_detection import process_frame  # Import the process_frame function
 
 app = FastAPI()
+
+redis_handler = RedisHandler(host="localhost", port=6379, db=0)
 
 # Store active WebSocket connections (if needed for broadcasting or multiple clients)
 active_connections: List[WebSocket] = []
@@ -44,6 +47,16 @@ async def websocket_endpoint(websocket: WebSocket):
 
             # Use the vehicle detection function to process the frame
             response = process_frame(img, frame_id, timestamp)
+            # Push each detected object to the Redis queue
+            for obj in response:
+                redis_payload = {
+                    "vehicle_id": obj["vehicle_id"],
+                    "frame_id": obj["frame_id"],
+                    "timestamp": obj["timestamp"],
+                    "meta_data": obj["meta_data"],
+                }
+                redis_handler.push_to_queue("vehicle_queue", redis_payload)  # Push to Redis queue
+
 
             # Send back the results as JSON
             await websocket.send_json(response)
