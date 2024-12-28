@@ -3,7 +3,7 @@ import React from "react";
 const Sidebar = ({ activeSection, setActiveSection }) => {
   return (
     <aside className="w-64 bg-gray-800 text-white flex flex-col">
-      <div className="p-6 text-2xl font-bold border-b border-gray-700">
+      <div className="p-6 text-2xl font-bold border-b border-grey-700">
         Dashboard
       </div>
       <nav className="flex-1 px-4 py-6">

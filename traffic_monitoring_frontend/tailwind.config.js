@@ -9,6 +9,10 @@ module.exports = {
       colors: {
         primary: '#1DA1F2',
         secondary: '#14171A',
+        sidebar: "#1E293B",
+        background: "#0F172A",
+        card: "#1E293B",
+        hover: "#334155",
       },
     },
   },
