@@ -6,6 +6,8 @@ import NavBar from "./components/NavBar";
 import LiveCameras from "./components/LiveCameras";
 import Violations from "./components/Violations";
 import Settings from "./components/Settings";
+import Reports from "./components/Reports";
+
 
 const App = () => {
   const [activeSection, setActiveSection] = useState("cameraAnalytics");
@@ -26,6 +28,8 @@ const App = () => {
         {activeSection === "liveCameras" && <LiveCameras />}
         {activeSection === "violations" && <Violations />}
         {activeSection === "settings" && <Settings />}
+        {activeSection === "reports" && <Reports />}
+        
       </main>
       </div>
     </div>
