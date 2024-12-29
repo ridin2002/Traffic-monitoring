@@ -5,8 +5,9 @@ import Camera from "./components/Camera";
 import NavBar from "./components/NavBar";
 import LiveCameras from "./components/LiveCameras";
 import Violations from "./components/Violations";
-import Settings from "./components/Settings";
+//import Settings from "./components/Settings";
 import Reports from "./components/Reports";
+import Settings from "./components/Settings/Settings";
 
 
 const App = () => {
