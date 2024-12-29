@@ -1,23 +1,152 @@
-import React from "react";
+import React, { useState } from 'react';
+import violationsData from '../data/Violation.json';
+
 
 const Violations = () => {
+  const [filters, setFilters] = useState({
+    status: '',
+    violationType: '',
+    vehicleId: '',
+    startDate: '',
+    endDate: '',
+  });
+
+  const handleFilterChange = (e) => {
+    setFilters({
+      ...filters,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const filteredData = violationsData.filter((violation) => {
+    const matchesStatus = filters.status ? violation.status.includes(filters.status) : true;
+    const matchesViolationType = filters.violationType
+      ? violation.violation.includes(filters.violationType)
+      : true;
+    const matchesVehicleId = filters.vehicleId ? violation.vehicle.includes(filters.vehicleId) : true;
+
+    // Date range filtering logic
+    const violationDate = new Date(violation.time);
+    const matchesStartDate = filters.startDate ? violationDate >= new Date(filters.startDate) : true;
+    const matchesEndDate = filters.endDate ? violationDate <= new Date(filters.endDate) : true;
+
+    return matchesStatus && matchesViolationType && matchesVehicleId && matchesStartDate && matchesEndDate;
+  });
+
   return (
-    <div className="h-full w-full flex flex-col">
-      <h1 className="text-3xl font-semibold text-gray-800 mb-6">Violations</h1>
-      <div className="bg-white rounded shadow flex-1 p-6">
-        <p className="text-gray-600 mb-4">Filter violations:</p>
-        <select
-          className="p-2 border border-gray-300 rounded"
-          onChange={(e) => console.log("Filter selected:", e.target.value)}
-        >
-          <option value="">Select Violation Type</option>
-          <option value="speeding">Speeding</option>
-          <option value="seatbelt">Seatbelt Violation</option>
-          <option value="wrongParking">Wrong Parking</option>
-        </select>
-        <div className="bg-gray-200 h-64 mt-4 flex items-center justify-center rounded">
-          <span className="text-gray-500">[Violations List Placeholder]</span>
+    <div className="p-6 bg-gray-900 text-white h-screen">
+      <h2 className="text-2xl font-bold mb-4">Traffic Violations</h2>
+      {/* Filters Section */}
+      <div className="bg-gray-800 shadow rounded-lg p-4 mb-4">
+        <div className="grid grid-cols-5 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-300">Status</label>
+            <select
+              name="status"
+              value={filters.status}
+              onChange={handleFilterChange}
+              className="mt-1 block w-full p-2 bg-gray-700 text-white border border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="">Filter by status</option>
+              <option value="Pending">Pending</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Resolved">Resolved</option>
+              <option value="Escalated">Escalated</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-300">Violation Type</label>
+            <select
+              name="violationType"
+              value={filters.violationType}
+              onChange={handleFilterChange}
+              className="mt-1 block w-full p-2 bg-gray-700 text-white border border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="">Filter by type</option>
+              <option value="NO_HELMET">No Helmet</option>
+              <option value="NO_SEATBELT">No Seatbelt</option>
+              <option value="OVERCROWDED">Overcrowded</option>
+              <option value="SPEED_VIOLATION">Speed Violation</option>
+              <option value="RED_LIGHT">Red Light</option>
+              <option value="WRONG_WAY">Wrong Way</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-300">Vehicle ID</label>
+            <input
+              type="text"
+              name="vehicleId"
+              value={filters.vehicleId}
+              onChange={handleFilterChange}
+              placeholder="Search by vehicle ID"
+              className="mt-1 block w-full p-2 bg-gray-700 text-white border border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-300">Start Date</label>
+            <input
+              type="date"
+              name="startDate"
+              value={filters.startDate}
+              onChange={handleFilterChange}
+              className="mt-1 block w-full p-2 bg-gray-700 text-white border border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-300">End Date</label>
+            <input
+              type="date"
+              name="endDate"
+              value={filters.endDate}
+              onChange={handleFilterChange}
+              className="mt-1 block w-full p-2 bg-gray-700 text-white border border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
         </div>
+        <div className="text-right mt-4">
+          <button
+            onClick={() =>
+              setFilters({
+                status: '',
+                violationType: '',
+                vehicleId: '',
+                startDate: '',
+                endDate: '',
+              })
+            }
+            className="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700"
+          >
+            Reset Filters
+          </button>
+        </div>
+      </div>
+      {/* Table Section */}
+      <div className="bg-gray-800 shadow rounded-lg">
+        <table className="table-auto w-full text-left text-white">
+          <thead>
+            <tr className="bg-gray-700">
+              <th className="p-3">Time</th>
+              <th className="p-3">Vehicle</th>
+              <th className="p-3">Violation</th>
+              <th className="p-3">Status</th>
+              <th className="p-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredData.map((violation, index) => (
+              <tr key={index} className="border-b border-gray-600 hover:bg-gray-700">
+                <td className="p-3">{violation.time}</td>
+                <td className="p-3">{violation.vehicle}</td>
+                <td className="p-3">{violation.violation}</td>
+                <td className="p-3">{violation.status}</td>
+                <td className="p-3">
+                  <button className="text-green-400 mr-2">✔</button>
+                  <button className="text-red-400">✖</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

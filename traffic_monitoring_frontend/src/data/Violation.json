@@ -1,0 +1,8 @@
+[
+    { "time": "10/2/2024, 8:30 am", "vehicle": "KA01MJ2022", "violation": "NO_HELMET", "status": "Pending" },
+    { "time": "10/2/2024, 9:15 am", "vehicle": "MH02AB1234", "violation": "SPEED_VIOLATION", "status": "In Progress" },
+    { "time": "10/2/2024, 10:45 am", "vehicle": "DL05XY7890", "violation": "NO_SEATBELT", "status": "Resolved" },
+    { "time": "10/2/2024, 11:20 am", "vehicle": "TN10CD4567", "violation": "OVERCROWDED", "status": "Escalated" },
+    { "time": "10/2/2024, 12:00 pm", "vehicle": "KA01MJ2022", "violation": "SPEED_VIOLATION", "status": "Pending" }
+  ]
+  
