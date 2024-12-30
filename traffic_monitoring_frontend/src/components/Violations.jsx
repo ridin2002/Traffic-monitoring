@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
-import violationsData from '../data/Violation.json';
-
+import violationsData from '../data/Violation.json'; // Ensure this is correctly located
 
 const Violations = () => {
+  const [violations, setViolations] = useState(
+    violationsData.map((violation) => ({
+      ...violation,
+      status: 'Pending', // Default status
+    }))
+  );
+
+  const updateStatus = (index, newStatus) => {
+    const updatedViolations = [...violations];
+    updatedViolations[index].status = newStatus;
+    setViolations(updatedViolations);
+  };
+
   const [filters, setFilters] = useState({
     status: '',
     violationType: '',
@@ -18,7 +30,7 @@ const Violations = () => {
     });
   };
 
-  const filteredData = violationsData.filter((violation) => {
+  const filteredData = violations.filter((violation) => {
     const matchesStatus = filters.status ? violation.status.includes(filters.status) : true;
     const matchesViolationType = filters.violationType
       ? violation.violation.includes(filters.violationType)
@@ -51,7 +63,6 @@ const Violations = () => {
               <option value="Pending">Pending</option>
               <option value="In Progress">In Progress</option>
               <option value="Resolved">Resolved</option>
-              <option value="Escalated">Escalated</option>
             </select>
           </div>
           <div>
@@ -139,9 +150,19 @@ const Violations = () => {
                 <td className="p-3">{violation.vehicle}</td>
                 <td className="p-3">{violation.violation}</td>
                 <td className="p-3">{violation.status}</td>
-                <td className="p-3">
-                  <button className="text-green-400 mr-2">✔</button>
-                  <button className="text-red-400">✖</button>
+                <td className="p-3 flex gap-2">
+                  <button
+                    className="text-green-400 hover:text-green-600"
+                    onClick={() => updateStatus(index, 'Resolved')}
+                  >
+                    ✔
+                  </button>
+                  <button
+                    className="text-red-400 hover:text-red-600"
+                    onClick={() => updateStatus(index, 'In Progress')}
+                  >
+                    ⚠
+                  </button>
                 </td>
               </tr>
             ))}
