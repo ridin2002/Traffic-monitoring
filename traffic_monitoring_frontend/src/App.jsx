@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "./components/Sidebar";
-import CameraAnalytics from "./components/CameraAnalytics";
+import CameraAnalytics from "./components/analytics/CameraAnalytics";
 import Camera from "./components/Camera";
 import NavBar from "./components/NavBar";
 import LiveCameras from "./components/LiveCameras";
