@@ -48,7 +48,7 @@ const Report = () => {
               <span>👥</span> Vehicle Occupancy Trends
             </h3>
             <p className="text-gray-400 mb-4">
-              Insights into average vehicle occupancy and trends over time.
+            Vehicle occupancy patterns and compliance with capacity regulations
             </p>
           </>
         );
@@ -59,7 +59,7 @@ const Report = () => {
               <span>🚦</span> Traffic Congestion Analysis
             </h3>
             <p className="text-gray-400 mb-4">
-              Analysis of traffic congestion patterns and peak time periods.
+            Traffic flow analysis and congestion hotspot identification
             </p>
           </>
         );
@@ -70,7 +70,7 @@ const Report = () => {
               <span>🌱</span> Environmental Impact
             </h3>
             <p className="text-gray-400 mb-4">
-              Assessment of environmental effects such as emissions and air quality.
+            Environmental metrics including air quality and noise levels
             </p>
           </>
         );
